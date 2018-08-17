@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue.js练习</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+
+<body>
+    <div id="todo-list-example">
+        <input v-model="newTodoText" v-on:keyup.enter="addNewTodo" placeholder="Add a todo">
+        <ul>
+            <li is="todo-item" v-for="(todo, index) in todos" v-bind:key="todo.id" v-bind:title="todo.title" v-on:remove="todos.splice(index, 1)"></li>
+        </ul>
+    </div>
+
+
+
+
+    <div id="root">
+        <div v-bind:title="'dell lee '+title">hello world</div>
+        <input type="text" v-bind:value="content" />
+        <!-- v-bind:value  可以缩写为  :value  -->
+        <input type="text" v-model="content" />
+        <!-- v-model 是数据双向绑定 -->
+        <div>
+            {{ content }}
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                title: "this is hello world!",
+                content: "this is content"
+            }
+        });
+    </script>
+
+    <div id="root1">
+        姓：<input type="text" v-model="firstName" /> 名：
+        <input type="text" v-model="secondName" />
+        <div>{{ fullName }}</div>
+        <div>
+            {{ count }}
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#root1',
+            data: {
+                firstName: '',
+                secondName: '',
+                count: '0'
+            },
+            // computed 是计算属性缓存
+            computed: {
+                fullName: function() {
+                    return this.firstName + ' ' + this.secondName
+                }
+            },
+            // watch 是监听属性
+            watch: {
+                firstName: function() {
+                    this.count++;
+                },
+                secondName: function() {
+                    this.count++;
+                }
+            }
+        })
+    </script>
+
+    <div id="root2">
+        <div v-if="show">hello world</div>
+        <button @click="handleClick">Toggle</button>
+        <ul>
+            <li v-for="item of list">{{ item }}</li>
+        </ul>
+    </div>
+    <script>
+        new Vue({
+            el: '#root2',
+            data: {
+                show: true,
+                list: [1, 2, 3]
+            },
+            methods: {
+                handleClick: function() {
+                    this.show = !this.show;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+
+<script type="text/javascript">
+    Vue.component('todo-item', {
+        template: '\
+	    <li>\
+	      {{ title }}\
+	      <button v-on:click="$emit(\'remove\')">X</button>\
+	    </li>\
+	  ',
+        props: ['title']
+    });
+    new Vue({
+        el: '#todo-list-example',
+        data: {
+            newTodoText: '',
+            todos: [{
+                id: 1,
+                title: 'Do the dishes',
+            }, {
+                id: 2,
+                title: 'Take out the trash',
+            }, {
+                id: 3,
+                title: 'Mow the lawn'
+            }],
+            nextTodoId: 4
+        },
+        methods: {
+            addNewTodo: function() {
+                this.todos.push({
+                    id: this.nextTodoId++,
+                    title: this.newTodoText
+                });
+                this.newTodoText = '';
+            }
+        }
+    });
+</script>
+
+</html>

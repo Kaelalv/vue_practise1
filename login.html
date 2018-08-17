@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+</head>
+
+<body>
+    <form action="" id="login">
+        <input type="hidden" v-model="status" value="2">
+        <label for="">account</label>
+        <input type="text" v-model="acc" placeholder="请输入账号">
+        <label for="">password</label>
+        <input type="password" v-model="pass" placeholder="请输入密码">
+        <p v-text="errTip"></p>
+        <input type="button" value="登录" @click="login()">
+    </form>
+    <script type="text/javascript" src="https://kaelalv.github.io/My_project/LSH/js/jquery.js"></script>
+    <script type="text/javascript" src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#login',
+            data() {
+                return {
+                    acc: '',
+                    pass: '',
+                    status: '',
+                    errTip: ''
+                }
+            },
+            methods: {
+                login() {
+                    // 169.254.1.145
+                    var acc = $.trim(this.acc);
+                    var pass = $.trim(this.pass);
+                    var status = this.status;
+                    if (acc == '') {
+                        this.errTip = "账号不能为空";
+                    }
+                    if (acc == '') {
+                        this.errTip = "密码不能为空";
+                    }
+                    $.ajax({
+                        url: 'http://169.254.1.145:8008/bm/LoginServlet_Phone.do',
+                        type: 'post',
+                        data: {
+                            account: acc,
+                            password: pass,
+                            status: status
+                        },
+                        dataType: 'json',
+                        success: function(res) {
+                            if (res.code != 0) {
+                                this.errTip = res.msg;
+                            } else {
+                                console.log(res.data);
+                            }
+                        }
+
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

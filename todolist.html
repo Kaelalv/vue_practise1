@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>开始进行todolist功能开发</title>
+    <script type="text/javascript" src="vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div>
+            <input type="text" v-model="inputValue" />
+            <button @click="handleSubmit">提交</button>
+        </div>
+        <ul>
+            <!-- <li v-for="(item,index) of list" :key="index">
+                {{item}}
+            </li> -->
+            <todo-item v-for='(item,index) of list' :key="index" :content="item" :index="index" @delete="handleDelete">
+            </todo-item>
+        </ul>
+    </div>
+    <script>
+        // 创建组件(相当于子组件)
+        Vue.component('todo-item', {
+            props: ['content', 'index'], // 使用props属性来接收从外部传递过来的content数据
+            template: '<li @click="handleClick">{{content}}{{index}}</li>',
+            methods: {
+                handleClick: function() {
+                    this.$emit('delete', this.index);
+                }
+            }
+        });
+        //这就相当于注册好一个组件了，这个是全局组件
+
+        // 这里是创建局部组件，则需要在new Vue里面作声明,添加components属性
+        /* var TodoItem = {
+            template: '<li>item1</li>'
+        } */
+
+        // 相当于父组件
+        new Vue({
+            el: '#root',
+            /* components: {
+                'todo-item': TodoItem
+            }, */
+            data: {
+                inputValue: '',
+                list: []
+            },
+            methods: {
+                handleSubmit: function() {
+                    this.list.push(this.inputValue);
+                    this.inputValue = '';
+                },
+                handleDelete: function(index) {
+                    this.list.splice(index, 1);
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

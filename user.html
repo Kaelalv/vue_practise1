@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="page-bar">
+        <ul>
+            <li v-if="cur>1">
+                <a v-on:click="cur--,pageClick()">上一页</a>
+            </li>
+            <li v-if="cur==1">
+                <a class="banclick">上一页</a>
+            </li>
+            <li v-for="index in indexs" v-bind:class="{ 'active': cur == index}">
+                <a v-on:click="btnClick(index)">{{ index }}</a>
+            </li>
+            <li v-if="cur!=all">
+                <a v-on:click="cur++,pageClick()">下一页</a>
+            </li>
+            <li v-if="cur == all">
+                <a class="banclick">下一页</a>
+            </li>
+            <li>
+                <a>共
+                    <i>{{all}}</i>页</a>
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="https://kaelalv.github.io/My_project/LSH/js/jquery.js"></script>
+    <script type="text/javascript" src="vue.js"></script>
+    <script type="text/javascript">
+        var pageBar = new Vue({
+            el: '.page-bar',
+            data: {
+                all: 8, //总页数
+                cur: 1 //当前页码
+            },
+            watch: {
+                cur: function(oldValue, newValue) {
+                    console.log(arguments);
+                }
+            },
+            methods: {
+                btnClick: function(data) { //页码点击事件
+                    if (data != this.cur) {
+                        this.cur = data
+                    }
+                },
+                pageClick: function() {
+                    console.log('现在在' + this.cur + '页');
+                }
+            },
+
+            computed: {
+                indexs: function() {
+                    var left = 1;
+                    var right = this.all;
+                    var ar = [];
+                    if (this.all >= 5) {
+                        if (this.cur > 3 && this.cur < this.all - 2) {
+                            left = this.cur - 2
+                            right = this.cur + 2
+                        } else {
+                            if (this.cur <= 3) {
+                                left = 1
+                                right = 5
+                            } else {
+                                right = this.all
+                                left = this.all - 4
+                            }
+                        }
+                    }
+                    while (left <= right) {
+                        ar.push(left)
+                        left++
+                    }
+                    return ar
+                }
+
+            }
+        })
+    </script>
+</body>
+
+</html>
