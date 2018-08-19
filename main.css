@@ -1,5 +1,7 @@
 .page-bar {
     margin: 40px;
+    width: 100%;
+    height: 60px;
 }
 
 ul,

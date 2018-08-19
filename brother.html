@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>兄弟组件互相传值</title>
+    <script src="script/vue.js"></script>
+</head>
+
+<body>
+    <div id="box">
+        <child1></child1>
+        <child2></child2>
+    </div>
+
+    <template id="c1">
+        <h1>~~~~~~我是哥哥~~~~{{msg}}
+            <button @click='fn'>点击</button>
+        </h1>
+    </template>
+    <template id="c2">
+        <h3>~~~~~~我是弟弟~~~~{{msg2}}</h3>
+    </template>
+</body>
+
+</html>
+<script>
+    var Hub = new Vue(); // 1) 中转站,其中不需要设置任何参数
+
+    var vm = new Vue({
+        el: '#box',
+        components: {
+            child1: {
+                template: '#c1',
+                data: function() {
+                    return {
+                        msg: 'hello'
+                    }
+                },
+                methods: {
+                    fn: function() {
+                        // 2) 主动触发监听(中转站触发监听)
+                        console.log(this.msg); //hello
+                        Hub.$emit('change', this.msg) //$emit触发监听方法
+                    }
+                }
+            },
+            child2: {
+                template: '#c2',
+                data: function() {
+                    return {
+                        msg2: 'world'
+                    }
+                },
+                // 创建完成  new Vue  create mount
+                // 钩子函数
+                created() {
+                    // 3) 接收监听  $on('事件名称',function(val){}) val是传递过来的值
+                    Hub.$on('change', function(val) {
+                        console.log(val + "============弟弟") //hello
+                            // this.msg2 = val;
+                    })
+                }
+            }
+
+        }
+    })
+</script>

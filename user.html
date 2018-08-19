@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <link type="css/text" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
     <link rel="stylesheet" href="main.css">
 </head>
 
@@ -33,60 +35,36 @@
             </li>
         </ul>
     </div>
-    <script type="text/javascript" src="https://kaelalv.github.io/My_project/LSH/js/jquery.js"></script>
-    <script type="text/javascript" src="vue.js"></script>
-    <script type="text/javascript">
-        var pageBar = new Vue({
-            el: '.page-bar',
-            data: {
-                all: 8, //总页数
-                cur: 1 //当前页码
-            },
-            watch: {
-                cur: function(oldValue, newValue) {
-                    console.log(arguments);
-                }
-            },
-            methods: {
-                btnClick: function(data) { //页码点击事件
-                    if (data != this.cur) {
-                        this.cur = data
-                    }
-                },
-                pageClick: function() {
-                    console.log('现在在' + this.cur + '页');
-                }
-            },
+    <div id="app" class="container">
 
-            computed: {
-                indexs: function() {
-                    var left = 1;
-                    var right = this.all;
-                    var ar = [];
-                    if (this.all >= 5) {
-                        if (this.cur > 3 && this.cur < this.all - 2) {
-                            left = this.cur - 2
-                            right = this.cur + 2
-                        } else {
-                            if (this.cur <= 3) {
-                                left = 1
-                                right = 5
-                            } else {
-                                right = this.all
-                                left = this.all - 4
-                            }
-                        }
-                    }
-                    while (left <= right) {
-                        ar.push(left)
-                        left++
-                    }
-                    return ar
-                }
+        <br/>
+        <table class="table table-bordered table-hover">
+            <caption class="h3 text-center text-info">用户列表</caption>
+            <thead>
+                <tr>
+                    <th class="text-center">id</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">性别</th>
+                    <th class="text-center">手机号</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user, index) in newArr" class="text-center">
 
-            }
-        })
-    </script>
+                    <td v-text="user.id"></td>
+                    <td v-text="user.name"></td>
+                    <td v-text="user.sex"></td>
+                    <td v-text="user.phone"></td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type=" text/javascript " src="bootstrap/js/bootstrap.min.js "></script>
+    <script type="text/javascript " src="script/vue.js "></script>
+    <script type="text/javascript " src="script/main.js "></script>
 </body>
 
 </html>

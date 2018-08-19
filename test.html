@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>测试兄弟之间的传值</title>
+    <script src="vue.js"></script>
+</head>
+
+<body>
+    <div>
+        <div id="c1">这里是哥哥的地盘 ====== {{ msg }} <button @click="fn">点击我</button></div>
+        <div id="c2">这是弟弟的地盘 ---- {{ brother }} </div>
+
+    </div>
+    <script>
+        var hub = new Vue();
+        var vm1 = new Vue({
+            el: "#c1",
+            data() {
+                return {
+                    msg: 'hello'
+                }
+            },
+            methods: {
+                fn() {
+                    console.log(this.msg);
+                    hub.$emit('change', this.msg);
+                }
+            }
+        });
+        var vm2 = new Vue({
+            el: "#c2",
+            data() {
+                return {
+                    msg2: 'world',
+                    brother: ''
+                }
+            },
+            created() {
+                hub.$on('change', function(val) {
+                    console.log(val + "哥哥传过来的msg")
+                    vm2.brother = val;
+                })
+            }
+        });
+    </script>
+</body>
+
+</html>
