@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>递归节点</title>
+    <style>
+        ul,
+        p,
+        li {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            border: none;
+        }
+        
+        .fl {
+            float: left;
+        }
+        
+        .pl {
+            clear: both;
+            width: 100%;
+            line-height: 32px;
+        }
+        
+        .pl15 {
+            padding-left: 15px;
+        }
+        
+        .plr20 {
+            padding: 0 20px;
+        }
+        
+        .list-item {
+            clear: both;
+            width: 100%;
+        }
+        
+        .bb {
+            border-bottom: 1px solid #000;
+        }
+        
+        .w25 {
+            width: 25%;
+            box-sizing: border-box;
+        }
+    </style>
+    <script src="script/jquery.js" type="text/javascript"></script>
+    <script>
+        $(function() {
+            var data = [{
+                    "id": "01",
+                    "name": "中国111",
+                    "uuid": "1000001",
+                    "module_name": "aaaaa",
+                    "action_name": "bbbbbb",
+                    "items": [{
+                        "id": "02",
+                        "name": "中国22",
+                        "uuid": "中国",
+                        "module_name": "中国",
+                        "action_name": "bbbbbb",
+                        "items": [{
+                            "id": "03",
+                            "name": "中国33",
+                            "uuid": "中国",
+                            "module_name": "中国",
+                            "action_name": "bbbbbb",
+                            "items": [{
+                                "id": "04",
+                                "name": "中国444",
+                                "uuid": "中国",
+                                "module_name": "中国",
+                                "action_name": "bbbbbb",
+                            }]
+                        }]
+
+                    }]
+                }, {
+                    "id": "05",
+                    "name": "中国555",
+                    "uuid": "中国",
+                    "module_name": "中国",
+                    "action_name": "bbbbbb",
+                    "items": [{
+                        "id": "06",
+                        "name": "中国66",
+                        "uuid": "中国",
+                        "module_name": "中国",
+                        "action_name": "bbbbbb",
+                        "items": [{
+                            "id": "07",
+                            "name": "中国77",
+                            "uuid": "中国",
+                            "module_name": "中国",
+                            "action_name": "bbbbbb",
+                            "items": [{
+                                "id": "08",
+                                "name": "中国888",
+                                "uuid": "中国",
+                                "module_name": "中国",
+                                "action_name": "bbbbbb",
+                            }]
+                        }]
+
+                    }]
+                }
+
+            ]
+
+            $("#treeRoot").html(TreeHtml(data));
+        });
+
+
+        var strHtml = "";
+        var pd = 15;
+        var index = 0;
+        var left = '';
+
+        //递归实现树结构
+        function TreeHtml(data) {
+
+            $.each(data, function(key, value) {
+                console.log(left);
+                left = 'style="padding-left:' + pd * index + 'px"'
+                strHtml += '<li class="list-item" id="li' + value.id + '"> ' +
+                    '<p class="fl w25 bb" ' + left + '>' + value.name + '</p>' +
+                    '<p class="fl w25 bb">' + value.uuid + '</p>' +
+                    '<p class="fl w25 bb">' + value.module_name + '</p>' +
+                    '<p class="fl w25 bb">' + value.action_name + '</p>';
+                index++;
+                if (value.items && value.items.length > 0) {
+                    strHtml += '<ul class="pl" id="ul' + value.id + '">';
+                    TreeHtml(value.items);
+                    strHtml += '</ul>';
+                }
+                index = 0;
+                strHtml += ' </li>';
+
+            });
+
+            return strHtml;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="Tree">
+        <ul id="treeRoot">
+        </ul>
+    </div>
+</body>
+
+</html>

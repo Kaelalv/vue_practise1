@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="demo.css" type="text/css">
+    <link rel="stylesheet" href="zTreeStyle.css" type="text/css">
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type="text/javascript" src="script/jquery.ztree.core.js"></script>
+    <script>
+        var zTreeObj,
+            setting = {
+                view: {
+                    selectedMulti: false
+                }
+            },
+            zTreeNodes = [{
+                "name": "网站导航",
+                open: true,
+                children: [{
+                    "name": "google",
+                    "url": "http://g.cn",
+                    "target": "_blank",
+                    children: [{
+                        "name": "google",
+                        "url": "http://g.cn",
+                        "target": "_blank"
+                    }, {
+                        "name": "baidu",
+                        "url": "http://baidu.com",
+                        "target": "_blank"
+                    }, {
+                        "name": "sina",
+                        "url": "http://www.sina.com.cn",
+                        "target": "_blank"
+                    }]
+                }, {
+                    "name": "baidu",
+                    "url": "http://baidu.com",
+                    "target": "_blank"
+                }, {
+                    "name": "sina",
+                    "url": "http://www.sina.com.cn",
+                    "target": "_blank"
+                }]
+            }];
+
+        $(document).ready(function() {
+            zTreeObj = $.fn.zTree.init($("#tree"), setting, zTreeNodes);
+
+        });
+    </script>
+</head>
+
+<body>
+    <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
+</body>
+
+</html>
