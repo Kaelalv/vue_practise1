@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <link type="css/text" rel="stylesheet" href="/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<body>
+    <div class="page-bar">
+        <ul>
+            <li v-if="cur>1">
+                <a v-on:click="cur--,pageClick()">上一页</a>
+            </li>
+            <li v-if="cur==1">
+                <a class="banclick">上一页</a>
+            </li>
+            <li v-for="index in indexs" v-bind:class="{ 'active': cur == index}">
+                <a v-on:click="btnClick(index)">{{ index }}</a>
+            </li>
+            <li v-if="cur!=all">
+                <a v-on:click="cur++,pageClick()">下一页</a>
+            </li>
+            <li v-if="cur == all">
+                <a class="banclick">下一页</a>
+            </li>
+            <li>
+                <a>共
+                    <i>{{all}}</i>页</a>
+            </li>
+        </ul>
+    </div>
+    <div id="app" class="container">
+
+        <br/>
+        <table class="table table-bordered table-hover">
+            <caption class="h3 text-center text-info">用户列表</caption>
+            <thead>
+                <tr>
+                    <th class="text-center">id</th>
+                    <th class="text-center">姓名</th>
+                    <th class="text-center">性别</th>
+                    <th class="text-center">手机号</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(user, index) in newArr" class="text-center">
+
+                    <td v-text="user.id"></td>
+                    <td v-text="user.name"></td>
+                    <td v-text="user.sex"></td>
+                    <td v-text="user.phone"></td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <script type="text/javascript" src="script/jquery.js"></script>
+    <script type=" text/javascript " src="bootstrap/js/bootstrap.min.js "></script>
+    <script type="text/javascript " src="script/vue.js "></script>
+    <script type="text/javascript " src="script/main.js "></script>
+</body>
+
+</html>

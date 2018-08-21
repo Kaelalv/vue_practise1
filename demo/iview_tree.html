@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>iView Tree</title>
+    <link rel="stylesheet" type="text/css" href="iview.css">
+    <link rel="stylesheet" type="text/css" href="vtree.css">
+    <script type="text/javascript" src="script/vue.min.js"></script>
+    <script type="text/javascript" src="script/iview.min.js"></script>
+    <style>
+        #app {
+            margin-left: 100px;
+        }
+        
+        .
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <Tree :data="baseData" show-checkbox></Tree>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    baseData: [{
+                        expand: true,
+                        title: 'parent 1',
+                        children: [{
+                            title: 'parent 1-0',
+                            expand: true,
+                            disabled: true,
+                            children: [{
+                                title: 'leaf',
+                                disableCheckbox: true
+                            }, {
+                                title: 'leaf',
+                            }]
+                        }, {
+                            title: 'parent 1-1',
+                            expand: true,
+                            checked: true,
+                            children: [{
+                                title: '<span style="color: red">leaf</span>',
+                            }]
+                        }]
+                    }]
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
